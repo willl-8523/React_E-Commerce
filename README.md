@@ -1,5 +1,8 @@
 # Develop an e-commerce application with react js
 
+If you want to add sass in the project directory, you can run:
+
+### `npm i sass`
 
 ## `Getting Started with Create React App`
 
