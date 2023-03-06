@@ -1,3 +1,9 @@
+/*
+  Permet d'informer où le composant parent (composant actuel) doit
+  se mettre par rapport au composant enfant
+*/
+import { Outlet } from "react-router-dom";
+
 import Directory from '../../components/directory/directory.component';
 
 const Home = () => {
@@ -29,7 +35,12 @@ const Home = () => {
     },
   ];
 
-  return <Directory categories={categories} />;
+  return (
+    <>
+      <Outlet />
+      <Directory categories={categories} />
+    </>
+  );
 };
 
 export default Home;
