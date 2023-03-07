@@ -9,3 +9,7 @@ DOC FIREBASE
 
     Installer Firebase sur notre application
     -> npm install firebase 
+
+    Authentification à l'aide de google
+    -> https://firebase.google.com/docs/auth/web/google-signin?hl=fr#web-version-9_3
+    
