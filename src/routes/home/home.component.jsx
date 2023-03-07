@@ -1,8 +1,8 @@
 /*
-  Permet d'informer où le composant parent (composant actuel) doit
+  Outlet => Permet d'informer où le composant parent (composant actuel) doit
   se mettre par rapport au composant enfant
 */
-import { Outlet } from "react-router-dom";
+// import { Outlet } from "react-router-dom";
 
 import Directory from '../../components/directory/directory.component';
 
@@ -37,7 +37,7 @@ const Home = () => {
 
   return (
     <>
-      <Outlet />
+      {/* <Outlet /> */}
       <Directory categories={categories} />
     </>
   );

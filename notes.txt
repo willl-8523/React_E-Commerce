@@ -1,1 +1,15 @@
 -> Install SASS => npm install sass 
+
+DOC FIREBASE
+
+    Dans firebase.com
+    -> Cliquer sur 'go to console'
+    -> Ensuite sur creer un projet
+    -> Decocher google analytics si on ne souhaite pas l'avoir
+
+    Installer Firebase sur notre application
+    -> npm install firebase 
+
+    Authentification à l'aide de google
+    -> https://firebase.google.com/docs/auth/web/google-signin?hl=fr#web-version-9_3
+    
