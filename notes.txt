@@ -13,3 +13,19 @@ DOC FIREBASE
     Authentification à l'aide de google
     -> https://firebase.google.com/docs/auth/web/google-signin?hl=fr#web-version-9_3
     
+    Se connecter grâce un compte google
+    -> creer un dossier (utils =>firebase) et un fichier (fichier js) dans src
+    -> Une fois crée il faut le connecter a notre projet crée dans firebase
+        -> cliquer sur le projet firebase, ensuite sur web (</>)
+        -> mettre le nom de notre application React pour la connection
+        -> cliquer sur enregistrer
+        -> copier la configuration de firebase et le coller dans firebase.util.js
+    -> Apres avoir configurer firebase, revenir sur notre projet firebase
+        -> dans le menu creer/authentification
+        -> choisir un fournisseur (dans notre cas c'est google)
+        -> Activer et saisir l'email google 
+        -> Enregistrer
+    
+    Se connecter avec Github
+    -> https://firebase.google.com/docs/auth/web/github-auth?hl=fr
+    -> https://www.youtube.com/watch?v=0TJ1lGgpU-4&ab_channel=akilischool
