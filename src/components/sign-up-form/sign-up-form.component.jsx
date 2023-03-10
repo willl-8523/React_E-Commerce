@@ -1,6 +1,8 @@
 
 import { useState } from "react";
 
+import { createAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
+
 const defaultFormFields = {
     displayName: '',
     email: '',
@@ -13,8 +15,27 @@ const SignUpForm = () => {
 
     // displayName = formFields.displayName
     const { displayName, email, password, confirmPassword } = formFields;
-    console.log(formFields);
-    
+    // console.log(formFields);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        // si password et confirmPassword sont differents
+        if (password !== confirmPassword) {
+            alert("passwords do not match");
+            return
+        }
+
+        // Creation de l'utilisateur
+        try {
+            // { user } = createAuthUserWithEmailAndPassword(email, password).user
+            const { user } = await createAuthUserWithEmailAndPassword(email, password);
+            console.log(user); 
+        } catch (error) {
+            console.log('User creation encountered an error', error);
+        }
+    }
+
     // Mettre a jour formFields selon les valeurs qui sont dans input
     const handleChange = (event) => {
       /*
@@ -38,9 +59,9 @@ const SignUpForm = () => {
     return (
       <div>
         <h1>Sign up with your email and password</h1>
-        <form onSubmit={() => {}}>
+        <form autoComplete="off" onSubmit={handleSubmit}>
           <label>Display Name</label>
-          {/*
+            {/*
                 -> Nous allons ajouter l'attr name pour differencié les inputs 
                 -> value={displayName} => displayName = la valeur qui sera entrer dans  l'input sera attribuer
             */}

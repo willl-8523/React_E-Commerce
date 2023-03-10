@@ -5,7 +5,13 @@
 import { initializeApp } from 'firebase/app';
 
 /* Service authentification */ 
-import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { 
+    getAuth, 
+    signInWithRedirect,
+    signInWithPopup,
+    GoogleAuthProvider, 
+    createUserWithEmailAndPassword,
+} from "firebase/auth";
 
 /*
     doc => permet de récuperer les documents de notre bdd firestar 
@@ -51,8 +57,11 @@ export const db = getFirestore();
 
 /*
     Cette méthode asynchrone (car récupère les données externe(firebase)) reçoit un objet d'auth de l'utilisateur (userAuth)
+    additionalInformation => Est un objet qui regroupe les information supplementaire si elles existent
 */
-export const createUserDocumentFromAuth = async (userAuth) => {
+export const createUserDocumentFromAuth = async (userAuth, additionalInformation) => {
+    if(!userAuth) return;
+
     // Cree une reference de document utilisateur
   const userDocRef = doc(db, 'users', userAuth.uid);
 
@@ -67,7 +76,8 @@ export const createUserDocumentFromAuth = async (userAuth) => {
   // Verifie si le doc exists sur la bdd
   console.log(userSnapshot.exists()); // false => le document n'est pas encore dans la bdd
 
-  /*    Pseudo-code de la suite: 
+  /*
+        Pseudo-code de la suite: 
         if user data does not exist
             create / set the document with the data from userAuth in my collection
         if user data exist
@@ -90,7 +100,8 @@ export const createUserDocumentFromAuth = async (userAuth) => {
         await setDoc(userDocRef, {
             displayName,
             email,
-            createdAt
+            createdAt,
+            ...additionalInformation,
         });
     } catch (error) {
         // Lors de la création de l'ux nous allons enregistrer le message d'erreur
@@ -99,4 +110,10 @@ export const createUserDocumentFromAuth = async (userAuth) => {
   } else {
     return userDocRef;
   }
+}
+
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+    if(!email || !password) return;
+
+    return await createUserWithEmailAndPassword(auth, email, password);
 }
