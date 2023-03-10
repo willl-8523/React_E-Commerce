@@ -31,14 +31,17 @@ const firebaseApp = initializeApp(firebaseConfig);
     Appeler un nouveau fournisseur(provider) Google, qui à son tour
     rendra cette instance de fournisseur
 */
-const provider = new GoogleAuthProvider();
+const googleProvider = new GoogleAuthProvider();
 
-provider.setCustomParameters({
+googleProvider.setCustomParameters({
     prompt: "select_account"
 });
 
 export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
+
+// Ce type de connexion nous redirige vers une page de connexion google
+export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 
 /*  
     Creer (Instancié) la bdd ce qui nous permettra d'acceder à la bdd
@@ -51,7 +54,7 @@ export const db = getFirestore();
 */
 export const createUserDocumentFromAuth = async (userAuth) => {
     // Cree une reference de document utilisateur
-  const userDocRef = doc(db, 'utilisateur', userAuth.uid);
+  const userDocRef = doc(db, 'users', userAuth.uid);
 
   console.log(userDocRef);
 
