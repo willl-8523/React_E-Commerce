@@ -29,3 +29,12 @@ DOC FIREBASE
     Se connecter avec Github
     -> https://firebase.google.com/docs/auth/web/github-auth?hl=fr
     -> https://www.youtube.com/watch?v=0TJ1lGgpU-4&ab_channel=akilischool
+
+    Créer une base de données
+    ->  Sur le menu de gauche cliquer sur 'Firestore Database'
+    ->  cliquer sur créer une base de données
+    ->  Garder le mode de production, cliquer sur suivant
+    ->  Choisir l'emplacement ensuite sur Activer
+    ->  Une fois crée, allé sur le menu règles
+    ->  Pour permettre d'apporter toutes les modifs (CRUD) à n'importe quel document 
+        à l'interieur => changer le false en true et cliquer sur publish
