@@ -59,22 +59,22 @@ export const db = getFirestore();
     Cette méthode asynchrone (car récupère les données externe(firebase)) reçoit un objet d'auth de l'utilisateur (userAuth)
     additionalInformation => Est un objet qui regroupe les information supplementaire si elles existent
 */
-export const createUserDocumentFromAuth = async (userAuth, additionalInformation) => {
+export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
     if(!userAuth) return;
 
     // Cree une reference de document utilisateur
   const userDocRef = doc(db, 'users', userAuth.uid);
 
-  console.log(userDocRef);
+//   console.log(userDocRef);
 
   //  On récupère le document
   //  await => car google doit le faire de manière asynchrone comme recupérer
   // userDocRef;
   const userSnapshot = await getDoc(userDocRef);
-  console.log(userSnapshot);
+//   console.log(userSnapshot);
 
   // Verifie si le doc exists sur la bdd
-  console.log(userSnapshot.exists()); // false => le document n'est pas encore dans la bdd
+//   console.log(userSnapshot.exists()); // false => le document n'est pas encore dans la bdd
 
   /*
         Pseudo-code de la suite: 
