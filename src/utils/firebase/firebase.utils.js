@@ -7,7 +7,7 @@ import { initializeApp } from 'firebase/app';
 /* Service authentification */ 
 import { 
     getAuth, 
-    signInWithRedirect,
+    /*signInWithRedirect,*/
     signInWithPopup,
     GoogleAuthProvider, 
     createUserWithEmailAndPassword,
@@ -32,6 +32,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
+console.log(firebaseApp);
 
 /*  
     Appeler un nouveau fournisseur(provider) Google, qui à son tour
@@ -47,7 +48,7 @@ export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
 
 // Ce type de connexion nous redirige vers une page de connexion google
-export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
+// export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 
 /*  
     Creer (Instancié) la bdd ce qui nous permettra d'acceder à la bdd
