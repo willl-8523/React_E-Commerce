@@ -12,9 +12,9 @@ const BUTTON_TYPE_CLASSES = {
 };
 
 const Button = ({ children, buttonType, ...otherProps }) => {
-  console.log('children', { children });
-  console.log('buttonType', { buttonType });
-  console.log('otherProps', {...otherProps});
+//   console.log('children', { children });
+//   console.log('buttonType', { buttonType });
+//   console.log('otherProps', {...otherProps});
   return (
     <button 
         className={`button-container ${BUTTON_TYPE_CLASSES[buttonType]}`}

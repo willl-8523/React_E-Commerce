@@ -2,37 +2,39 @@
   Et si veut ajouter une connexion par redirection google 
   On importe useEffect, getRedirectResult et auth
 */
-import { useEffect } from "react";
-import { getRedirectResult } from "firebase/auth";
+// import { useEffect } from "react";
+// import { getRedirectResult } from "firebase/auth";
 
 import {
-  auth,
-  signInWithGooglePopup,
+  // auth,
+  // signInWithGooglePopup,
   // signInWithGoogleRedirect,
-  createUserDocumentFromAuth,
+  // createUserDocumentFromAuth,
 } from '../../utils/firebase/firebase.utils';
+
 import SignUpForm from '../../components/sign-up-form/sign-up-form.component';
+import SignInForm from '../../components/sign-in-form/sign-in-form.component'
 
-const SignIn = () => {
+const Authentication = () => {
   // Recuperer l'utilisateur connecter
-  useEffect(() => {
-    async function fetchData() {
-      // You can await here
-      const response = await getRedirectResult(auth);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     // You can await here
+  //     const response = await getRedirectResult(auth);
 
-      // Generer la user reference doc et l'ajouter à la bdd
-      if (response) {
-        const userDocRef = await createUserDocumentFromAuth(response.user);
-        console.log(userDocRef);
-      }
-    }
-    fetchData();
-  }, []);
+  //     // Generer la user reference doc et l'ajouter à la bdd
+  //     if (response) {
+  //       const userDocRef = await createUserDocumentFromAuth(response.user);
+  //       console.log(userDocRef);
+  //     }
+  //   }
+  //   fetchData();
+  // }, []);
 
-  const logGoogleUser = async () => {
-    const {user} = await signInWithGooglePopup();
-    createUserDocumentFromAuth(user);
-  }
+  // const logGoogleUser = async () => {
+  //   const {user} = await signInWithGooglePopup();
+  //   createUserDocumentFromAuth(user);
+  // }
 
   // const logGoogleRedirectUser = async () => {
   //   const { user } = await signInWithGoogleRedirect();
@@ -45,16 +47,16 @@ const SignIn = () => {
   return (
     <div>
       <h1>Sign in page</h1>
-      <button onClick={logGoogleUser}>Sign in with Google Popup</button>
       {/*
         <button onClick={signInWithGoogleRedirect}>
         Sign in with Google Redirect
         </button>
       */}
 
+      <SignInForm />
       <SignUpForm />
     </div>
   );
 }
  
-export default SignIn;
+export default Authentication;

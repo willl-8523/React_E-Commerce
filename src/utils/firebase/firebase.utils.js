@@ -1,22 +1,26 @@
 /* 
-    firebase/app => pour inclure notre application (app) 
-    initializeApp => Cree une instance d'application
+  firebase/app => pour inclure notre application (app) 
+  initializeApp => Cree une instance d'application
 */
 import { initializeApp } from 'firebase/app';
 
-/* Service authentification */ 
+/*
+  Service authentification
+  signInWithEmailAndPassword => permet de verifier si l'ux est dans la bdd (firebase)
+*/ 
 import { 
     getAuth, 
     /*signInWithRedirect,*/
     signInWithPopup,
     GoogleAuthProvider, 
     createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
 } from "firebase/auth";
 
 /*
-    doc => permet de récuperer les documents de notre bdd firestar 
-    getDoc => récuperer les données du document
-    setDoc => modifier les données du document
+  doc => permet de récuperer les documents de notre bdd firestar 
+  getDoc => récuperer les données du document
+  setDoc => modifier les données du document
 */
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
@@ -35,8 +39,8 @@ const firebaseApp = initializeApp(firebaseConfig);
 console.log(firebaseApp);
 
 /*  
-    Appeler un nouveau fournisseur(provider) Google, qui à son tour
-    rendra cette instance de fournisseur
+  Appeler un nouveau fournisseur(provider) Google, qui à son tour
+  rendra cette instance de fournisseur
 */
 const googleProvider = new GoogleAuthProvider();
 
@@ -51,14 +55,14 @@ export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider)
 // export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 
 /*  
-    Creer (Instancié) la bdd ce qui nous permettra d'acceder à la bdd
-    de firebase 
+  Creer (Instancié) la bdd ce qui nous permettra d'acceder à la bdd
+  de firebase 
 */
 export const db = getFirestore();
 
 /*
-    Cette méthode asynchrone (car récupère les données externe(firebase)) reçoit un objet d'auth de l'utilisateur (userAuth)
-    additionalInformation => Est un objet qui regroupe les information supplementaire si elles existent
+  Cette méthode asynchrone (car récupère les données externe(firebase)) reçoit un objet d'auth de l'utilisateur (userAuth)
+  additionalInformation => Est un objet qui regroupe les information supplementaire si elles existent
 */
 export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
     if(!userAuth) return;
@@ -78,11 +82,11 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInformation
 //   console.log(userSnapshot.exists()); // false => le document n'est pas encore dans la bdd
 
   /*
-        Pseudo-code de la suite: 
-        if user data does not exist
-            create / set the document with the data from userAuth in my collection
-        if user data exist
-            return userDocRef
+    Pseudo-code de la suite: 
+    if user data does not exist
+      create / set the document with the data from userAuth in my collection
+    if user data exist
+      return userDocRef
   */
 
   // Si les données de l'utilisateur n'existe pas
@@ -94,19 +98,19 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInformation
     const createdAt = new Date();
 
     try {
-        /*
-            defini le document en lui rajoutant la reference de document utilisateur
-            puis les données avec lesquelles nous voulons installer
-        */
-        await setDoc(userDocRef, {
-            displayName,
-            email,
-            createdAt,
-            ...additionalInformation,
-        });
+      /*
+        defini le document en lui rajoutant la reference de document utilisateur
+        puis les données avec lesquelles nous voulons installer
+      */
+      await setDoc(userDocRef, {
+        displayName,
+        email,
+        createdAt,
+        ...additionalInformation,
+      });
     } catch (error) {
-        // Lors de la création de l'ux nous allons enregistrer le message d'erreur
-        console.log('error creating the user', error.message);
+      // Lors de la création de l'ux nous allons enregistrer le message d'erreur
+      console.log('error creating the user', error.message);
     }
   } else {
     return userDocRef;
@@ -114,7 +118,13 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInformation
 }
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
-    if(!email || !password) return;
+  if(!email || !password) return;
 
-    return await createUserWithEmailAndPassword(auth, email, password);
+  return await createUserWithEmailAndPassword(auth, email, password);
+}
+
+export const signInAuthUserWithEmailAndPassword = async (email, password) => {
+  if(!email || !password) return;
+
+  return await signInWithEmailAndPassword(auth, email, password);
 }
