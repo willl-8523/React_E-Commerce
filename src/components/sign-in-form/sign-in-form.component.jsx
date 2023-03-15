@@ -43,7 +43,16 @@ const SignInForm = () => {
         /* Vider le formulaire après l'enregistrement de l'utilisateur */
         resetFormFields();
       } catch (error) {
-        console.log(error.code);
+        // console.log(error.code);
+        switch (error.code) {
+          case 'auth/wrong-password':
+          case 'auth/user-not-found':
+            alert('Email or Password incorrect');
+            break;
+          default:
+            console.log(error);
+            break;
+        }
       }
     }
 
@@ -83,8 +92,14 @@ const SignInForm = () => {
           
           <div className="buttons-container">
             <Button type="submit" children="Sign In" />
+            {/*
+              Par defaut les boutons est de type submit dans un formulaire
+              donc il soumet le formulaire par defaut lorsqu'on clique
+              Pour éviter ce comportement par default on ajoute => type='button'
+           */}
             <Button
               buttonType='google'
+              type='button'
               onClick={signInWithGoogle}
               children="Google sign in"
             />
