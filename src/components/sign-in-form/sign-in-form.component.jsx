@@ -1,8 +1,16 @@
 
-import { useState } from "react";
+/*
+  useContext et UserContext => nous permettra de sauvegarder l'ux ({ user }) connecte
+*/
+import { useState, useContext } from "react";
 
 import FormInput from '../../components/form-input/form-input.component';
 import Button from "../button/button.component";
+
+/*
+  UserContext => va nous rendre la valeur passer dans <UserContext.Provider value={value}>{children}</UserContext.Provider> dans user.context.jsx 
+*/
+import { UserContext } from "../../contexts/user.context";
 
 import {
   signInWithGooglePopup,
@@ -23,12 +31,16 @@ const SignInForm = () => {
     const { email, password } = formFields;
     // console.log(formFields);
 
+    const { setCurrentUser } = useContext(UserContext);
+
     const resetFormFields = () => {
       setFormFields(defaultFormFields);
     }
 
     const signInWithGoogle = async () => {
       const { user } = await signInWithGooglePopup();
+      console.log({ user });
+
       await createUserDocumentFromAuth(user);
     };
 
@@ -37,8 +49,16 @@ const SignInForm = () => {
 
       try {
         /* Verifier que l'ux existe */
-        const response = await signInAuthUserWithEmailAndPassword(email, password);
-        console.log(response);
+        const { user } = await signInAuthUserWithEmailAndPassword(
+          email,
+          password
+        );
+
+        /*
+          setCurrentUser(user) recupere l'ux ensuite voir dans navigation.compoment 
+        */
+        setCurrentUser(user);
+        console.log({ user });
 
         /* Vider le formulaire après l'enregistrement de l'utilisateur */
         resetFormFields();
