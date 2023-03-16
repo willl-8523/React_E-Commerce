@@ -1,5 +1,5 @@
 
-import { useState, useContext } from "react";
+import { useState, /*useContext*/ } from "react";
 
 import FormInput from '../../components/form-input/form-input.component';
 import Button from "../button/button.component";
@@ -11,7 +11,7 @@ import {
 
 import './sign-up-form.styles.scss';
 
-import { UserContext } from "../../contexts/user.context";
+// import { UserContext } from "../../contexts/user.context";
 
 const defaultFormFields = {
     displayName: '',
@@ -29,7 +29,7 @@ const SignUpForm = () => {
   // const val = useContext(UserContext);
   // console.log(val);
 
-  const { setCurrentUser } = useContext(UserContext);
+  // const { setCurrentUser } = useContext(UserContext);
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -57,7 +57,7 @@ const SignUpForm = () => {
       );
       console.log(user);
 
-      setCurrentUser(user);
+      // setCurrentUser(user);
 
       /*
             { displayName } => correspond au nom qu'il va recuperer dans les infos supplementaire de l'utilisateur (additionalInformation)

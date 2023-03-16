@@ -17,6 +17,7 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
+    onAuthStateChanged,
 } from "firebase/auth";
 
 /*
@@ -134,3 +135,12 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 
 /* signOutUser => sera importer dans navigation */
 export const signOutUser = async () => await signOut(auth);
+
+/*
+  Nous permet de récuperer si l'ux est connecté ou pas
+  
+  callback => sera appeler chaque fois que l'etat de onAuthStateChanged va changer
+
+  onAuthStateChangedListerner sera importé dans user.context.jsx car la majorite du code lié à la récuperation et au suivi de la valeur de l'ux devrait être conservé à l'endroit ou le stockons aussi  
+*/
+export const onAuthStateChangedListerner = (callback) => onAuthStateChanged(auth, callback);

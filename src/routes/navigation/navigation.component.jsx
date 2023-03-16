@@ -11,14 +11,14 @@ import './navigation.styles.scss';
 const Navigation = () => {
 
   /* useContext fait un re-render */
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { currentUser, /*setCurrentUser*/ } = useContext(UserContext);
   /* Affiche l'ux connecté */
   // console.log(currentUser);
 
-  const signOutHandle = async () => {
-    await signOutUser();
-    setCurrentUser(null);
-  }
+  // const signOutHandle = async () => {
+  //   await signOutUser();
+  //   setCurrentUser(null);
+  // }
 
 
   return (
@@ -32,7 +32,7 @@ const Navigation = () => {
             SHOP
           </Link>
           {currentUser ? (
-            <span className="nav-link" onClick={signOutHandle}>
+            <span className="nav-link" onClick={signOutUser}>
               SIGN OUT
             </span>
           ) : (
