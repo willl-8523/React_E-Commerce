@@ -7,6 +7,7 @@ import { initializeApp } from 'firebase/app';
 /*
   Service authentification
   signInWithEmailAndPassword => permet de verifier si l'ux est dans la bdd (firebase)
+  signOut => déconnecte l'utilisateur
 */ 
 import { 
     getAuth, 
@@ -15,6 +16,8 @@ import {
     GoogleAuthProvider, 
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged,
 } from "firebase/auth";
 
 /*
@@ -48,6 +51,7 @@ googleProvider.setCustomParameters({
     prompt: "select_account"
 });
 
+/* Dans auth nous avons l'utilisateur connecté */
 export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
 
@@ -128,3 +132,15 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 
   return await signInWithEmailAndPassword(auth, email, password);
 }
+
+/* signOutUser => sera importer dans navigation */
+export const signOutUser = async () => await signOut(auth);
+
+/*
+  Nous permet de récuperer si l'ux est connecté ou pas
+  
+  callback => sera appeler chaque fois que l'etat de onAuthStateChanged va changer
+
+  onAuthStateChangedListerner sera importé dans user.context.jsx car la majorite du code lié à la récuperation et au suivi de la valeur de l'ux devrait être conservé à l'endroit ou le stockons aussi  
+*/
+export const onAuthStateChangedListerner = (callback) => onAuthStateChanged(auth, callback);

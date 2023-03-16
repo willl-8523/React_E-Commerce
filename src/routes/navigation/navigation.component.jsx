@@ -4,14 +4,22 @@ import { Outlet, Link } from 'react-router-dom';
 import { ReactComponent as Logo } from "../../assets/logo.svg";
 import { UserContext } from '../../contexts/user.context';
 
+import { signOutUser } from '../../utils/firebase/firebase.utils';
+
 import './navigation.styles.scss';
 
 const Navigation = () => {
 
   /* useContext fait un re-render */
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, /*setCurrentUser*/ } = useContext(UserContext);
   /* Affiche l'ux connecté */
-  console.log(currentUser);
+  // console.log(currentUser);
+
+  // const signOutHandle = async () => {
+  //   await signOutUser();
+  //   setCurrentUser(null);
+  // }
+
 
   return (
     <Fragment>
@@ -23,9 +31,15 @@ const Navigation = () => {
           <Link className="nav-link" to="/shop">
             SHOP
           </Link>
-          <Link className="nav-link" to="/auth">
-            SIGN IN
-          </Link>
+          {currentUser ? (
+            <span className="nav-link" onClick={signOutUser}>
+              SIGN OUT
+            </span>
+          ) : (
+            <Link className="nav-link" to="/auth">
+              SIGN IN
+            </Link>
+          )}
         </div>
       </div>
       <Outlet />
