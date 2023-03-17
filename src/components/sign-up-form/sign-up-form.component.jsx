@@ -14,10 +14,10 @@ import './sign-up-form.styles.scss';
 // import { UserContext } from "../../contexts/user.context";
 
 const defaultFormFields = {
-    displayName: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+  displayName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
 };
 
 const SignUpForm = () => {
@@ -60,8 +60,8 @@ const SignUpForm = () => {
       // setCurrentUser(user);
 
       /*
-            { displayName } => correspond au nom qu'il va recuperer dans les infos supplementaire de l'utilisateur (additionalInformation)
-          */
+        { displayName } => correspond au nom qu'il va recuperer dans les infos supplementaire de l'utilisateur (additionalInformation)
+      */
       await createUserDocumentFromAuth(user, { displayName });
       // console.log({displayName});
 
