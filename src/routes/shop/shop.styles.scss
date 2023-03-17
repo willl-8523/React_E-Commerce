@@ -1,0 +1,6 @@
+.products-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); // si width: 100px => 4 div de 25px;
+    column-gap: 10px;
+    row-gap: 50px;
+}

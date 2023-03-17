@@ -1,6 +1,6 @@
 /*
-    Pour utiliser le context (nous permet de sauvegarder l'ux connecté ) 
-    createContext => créer le context
+  Pour utiliser le context (nous permet de sauvegarder l'ux connecté ) 
+  createContext => créer le context
 */
 import { createContext, useState, useEffect } from "react";
 
@@ -10,8 +10,8 @@ import {
 } from '../utils/firebase/firebase.utils';
 
 /* 
-    Créer un context par defaut => la valeur réelle à laquelle vous voulez accéder
-    Par defaut ils sont a null ce qui nous permettra de savoir si un ux est connecter (!== null) ou pas  
+  Créer un context par defaut => la valeur réelle à laquelle vous voulez accéder
+  Par defaut ils sont a null ce qui nous permettra de savoir si un ux est connecter (!== null) ou pas  
 */
 export const UserContext = createContext({
     currentUser: null,

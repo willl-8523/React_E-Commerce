@@ -10,14 +10,14 @@ import { initializeApp } from 'firebase/app';
   signOut => déconnecte l'utilisateur
 */ 
 import { 
-    getAuth, 
-    /*signInWithRedirect,*/
-    signInWithPopup,
-    GoogleAuthProvider, 
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signOut,
-    onAuthStateChanged,
+  getAuth, 
+  /*signInWithRedirect,*/
+  signInWithPopup,
+  GoogleAuthProvider, 
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
 
 /*
@@ -69,21 +69,21 @@ export const db = getFirestore();
   additionalInformation => Est un objet qui regroupe les information supplementaire si elles existent
 */
 export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
-    if(!userAuth) return;
+  if(!userAuth) return;
 
-    // Cree une reference de document utilisateur
+  // Cree une reference de document utilisateur
   const userDocRef = doc(db, 'users', userAuth.uid);
 
-//   console.log(userDocRef);
+  //   console.log(userDocRef);
 
   //  On récupère le document
-  //  await => car google doit le faire de manière asynchrone comme recupérer
-  // userDocRef;
+//  await => car google doit le faire de manière asynchrone comme recupérer
+// userDocRef;
   const userSnapshot = await getDoc(userDocRef);
-//   console.log(userSnapshot);
+  //   console.log(userSnapshot);
 
   // Verifie si le doc exists sur la bdd
-//   console.log(userSnapshot.exists()); // false => le document n'est pas encore dans la bdd
+  //   console.log(userSnapshot.exists()); // false => le document n'est pas encore dans la bdd
 
   /*
     Pseudo-code de la suite: 
