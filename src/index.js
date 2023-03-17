@@ -16,10 +16,10 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       {/* 
-      Tous ce qui sera à l'interieur du fournisseur (<UserProvider>) le contexte sera accessible
+        Tous ce qui sera à l'interieur du fournisseur (<UserProvider>) le contexte sera accessible
 
-      -> Le fournisseur de produit (ProductsProvider) peut atteindre le fournisseur d'ux (UserProvider) mais pas necessairement l'inverse
-    */}
+        -> Le fournisseur de produit (ProductsProvider) peut atteindre le fournisseur d'ux (UserProvider) mais pas necessairement l'inverse
+      */}
       <UserProvider>
         <ProductsProvider>
           <CartProvider>
