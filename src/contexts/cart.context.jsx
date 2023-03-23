@@ -25,7 +25,7 @@ const addCartItem = (cartItems, productToAdd) => {
 
 /*  
     Retirer un produit du panier
-    cartItems => tableau des produits du panier
+    cartItems => tableau des articles du panier
     cartItemToRemove => produit qu'on souhaite retirer
 */
 const removeCartItem = (cartItems, cartItemToRemove) => {
