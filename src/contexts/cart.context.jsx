@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 
-/* Verifier si le produit ajouter existe deja */
+/* Ajouter un produit dans le panier */
 const addCartItem = (cartItems, productToAdd) => {
     // find if cartItems contains productToAdd (check by id)
     const existingCartItem = cartItems.find((cartItem) =>
@@ -23,12 +23,40 @@ const addCartItem = (cartItems, productToAdd) => {
     return [...cartItems, { ...productToAdd, quantity: 1 }];
 }
 
+/*  
+    Retirer un produit du panier
+    cartItems => tableau des produits du panier
+    cartItemToRemove => produit qu'on souhaite retirer
+*/
+const removeCartItem = (cartItems, cartItemToRemove) => {
+
+    // Rechercher l'article du panier à supprimer
+    const existingCartItem = cartItems.find(
+        (cartItem) => cartItem.id === cartItemToRemove.id
+    );
+
+    // Vérifier si la quantité est égale à 1, si c'est le cas retirer l'article du panier(panier)
+    if (existingCartItem.quantity === 1) {
+        return cartItems.filter(
+          (cartItem) => cartItem.id !== cartItemToRemove.id
+        );
+    }
+
+    // sinon renvoyer les articles du panier avec l'article du panier correspondant avec une quantité réduite
+    return cartItems.map((cartItem) =>
+      cartItem.id === cartItemToRemove.id
+        ? { ...cartItem, quantity: cartItem.quantity - 1 }
+        : cartItem
+    );
+}
+
 
 export const CartContext = createContext({
     isCartOpen: false,
     setIsCartOpen: () => {},
     cartItems: [],
     addItemToCart: () => {},
+    removeItemFromCart: () => {},
     cartCount : 0,
 });
 
@@ -50,33 +78,43 @@ export const CartContext = createContext({
 */
 
 export const CartProvider = ({children}) => {
-    const [isCartOpen, setIsCartOpen] = useState(false);
-    const [cartItems, setCartItems] = useState([]);
-    const [cartCount, setCartCount] = useState(0);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const [cartCount, setCartCount] = useState(0);
 
-    /* 
+  /* 
         Compter la quantité totale du panier
         chaque qu'on ajoute un artcile
     */
-    useEffect(() => {
-        const newCartCount = cartItems.reduce((total, cartItem) => total + cartItem.quantity, 0);
+  useEffect(() => {
+    const newCartCount = cartItems.reduce(
+      (total, cartItem) => total + cartItem.quantity,
+      0
+    );
 
-        setCartCount(newCartCount);        
-    }, [cartItems]);
+    setCartCount(newCartCount);
+  }, [cartItems]);
 
-    /* productToAdd => produit lorsqu'on clique sur 'ADD TO CARD' */
-    const addItemToCart = (productToAdd) => {
-      setCartItems(addCartItem(cartItems, productToAdd, addItemToCart));
-    };
-    console.log(addItemToCart);
+  /* productToAdd => produit lorsqu'on clique sur 'ADD TO CARD' */
+  const addItemToCart = (productToAdd) => {
+    setCartItems(addCartItem(cartItems, productToAdd, addItemToCart));
+  };
+  // console.log(addItemToCart);
 
-    const value = {
-      isCartOpen,
-      setIsCartOpen,
-      addItemToCart,
-      cartItems,
-      cartCount,
-    };
+  // cartItemToRemove => le produit que l'on souhaite retirer du panier
+  const removeItemToCart = (cartItemToRemove) => {
+    setCartItems(removeCartItem(cartItems, cartItemToRemove));
+  };
+  // console.log(removeItemToCart);
 
-    return <CartContext.Provider value={value}>{children}</CartContext.Provider>
+  const value = {
+    isCartOpen,
+    setIsCartOpen,
+    addItemToCart,
+    removeItemToCart,
+    cartItems,
+    cartCount,
+  };
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
