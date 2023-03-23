@@ -63,6 +63,7 @@ export const CartContext = createContext({
   removeItemFromCart: () => {},
   clearItemFromCart: () => {},
   cartCount : 0,
+  cartTotal: 0,
 });
 
 /*  
@@ -86,11 +87,12 @@ export const CartProvider = ({children}) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
+  const [cartTotal, setCartTotal] = useState(0);
 
   /* 
-        Compter la quantité totale du panier
-        chaque qu'on ajoute un artcile
-    */
+    Compter la quantité totale du panier
+    chaque qu'on ajoute un artcile
+  */
   useEffect(() => {
     const newCartCount = cartItems.reduce(
       (total, cartItem) => total + cartItem.quantity,
@@ -98,6 +100,19 @@ export const CartProvider = ({children}) => {
     );
 
     setCartCount(newCartCount);
+  }, [cartItems]);
+
+  /* 
+    Calculer la somme totale du panier
+    chaque fois qu'on ajoute un artcile
+  */
+  useEffect(() => {
+    const newTotal = cartItems.reduce(
+      (totalCart, cartItem) => totalCart + cartItem.quantity * cartItem.price,
+      0
+    );
+
+    setCartTotal(newTotal);
   }, [cartItems]);
 
   /* productToAdd => produit lorsqu'on clique sur 'ADD TO CARD' */
@@ -128,6 +143,7 @@ export const CartProvider = ({children}) => {
     clearItemFromCart,
     cartItems,
     cartCount,
+    cartTotal,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
