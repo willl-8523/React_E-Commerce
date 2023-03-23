@@ -3,7 +3,7 @@ import './cart-item.styles.scss';
 
 const CartItem = ({ cartItem }) => {
     
-    console.log({cartItem});
+    // console.log({cartItem});
     const { name, imageUrl, price, quantity } = cartItem;
 
     return ( 
