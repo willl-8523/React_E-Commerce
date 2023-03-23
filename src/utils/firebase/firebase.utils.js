@@ -21,11 +21,19 @@ import {
 } from "firebase/auth";
 
 /*
-  doc => permet de récuperer les documents de notre bdd firestar 
+  doc => permet de récuperer les documents de notre bdd firestar et genere une réference de document pour la bdd
   getDoc => récuperer les données du document
   setDoc => modifier les données du document
+  collection et writeBatch => permettent de Telecharger les données dans la bdd (firestorm)
+  collection => generer une réference de collection
 */
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import { getFirestore, 
+  doc,
+  getDoc, 
+  setDoc, 
+  collection, 
+  writeBatch,
+} from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -63,6 +71,39 @@ export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider)
   de firebase 
 */
 export const db = getFirestore();
+
+/*  
+  Ajouter une nouvelle collection ainsi que les documents à l'interieur de
+  cette collection
+  collection => nom de la collection (categories, users...)
+  objectsToAdd => les documents qu'on veut ajouter (chaque objet de shop-data)
+  async => parceque nous ajoutons à une source exterieur (firebase)
+*/
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd, field) => {
+  // Creer une reference de la collection
+  const collectionRef = collection(db, collectionKey);
+
+  /* 
+    -> Stocker chacun des objets (objectsToAdd) en tant que nouveau document dans collectionRef
+    -> S'assurer que tous nos objets que nous essayons d'ajouter à la collection sont ajoutés avec succes (en utlisant un lot)
+  */
+  
+  // Instancié le lot
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((object) => {
+    /*
+      docRef => La reference du document 
+      le nom du document => le titre de chaque objet
+    */
+    const docRef = doc(collectionRef, object[field].toLowerCase());
+    batch.set(docRef, object);
+  });
+
+  await batch.commit();
+  console.log('done');
+}
+
 
 /*
   Cette méthode asynchrone (car récupère les données externe(firebase)) reçoit un objet d'auth de l'utilisateur (userAuth)
