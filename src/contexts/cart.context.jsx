@@ -16,8 +16,8 @@ const addCartItem = (cartItems, productToAdd) => {
                 : cartItem 
         );
     }
-    console.log(cartItems);
-    console.log(productToAdd);
+    // console.log(cartItems);
+    // console.log(productToAdd);
 
     // return new array with modified cartItems / new cartItem
     return [...cartItems, { ...productToAdd, quantity: 1 }];
@@ -30,34 +30,39 @@ const addCartItem = (cartItems, productToAdd) => {
 */
 const removeCartItem = (cartItems, cartItemToRemove) => {
 
-    // Rechercher l'article du panier à supprimer
-    const existingCartItem = cartItems.find(
-        (cartItem) => cartItem.id === cartItemToRemove.id
-    );
+  // Rechercher l'article du panier à supprimer
+  const existingCartItem = cartItems.find(
+      (cartItem) => cartItem.id === cartItemToRemove.id
+  );
 
-    // Vérifier si la quantité est égale à 1, si c'est le cas retirer l'article du panier(panier)
-    if (existingCartItem.quantity === 1) {
-        return cartItems.filter(
-          (cartItem) => cartItem.id !== cartItemToRemove.id
-        );
-    }
+  // Vérifier si la quantité est égale à 1, si c'est le cas retirer l'article du panier(panier)
+  if (existingCartItem.quantity === 1) {
+      return cartItems.filter(
+        (cartItem) => cartItem.id !== cartItemToRemove.id
+      );
+  }
 
-    // sinon renvoyer les articles du panier avec l'article du panier correspondant avec une quantité réduite
-    return cartItems.map((cartItem) =>
-      cartItem.id === cartItemToRemove.id
-        ? { ...cartItem, quantity: cartItem.quantity - 1 }
-        : cartItem
-    );
+  // sinon renvoyer les articles du panier avec l'article du panier correspondant avec une quantité réduite
+  return cartItems.map((cartItem) =>
+    cartItem.id === cartItemToRemove.id
+      ? { ...cartItem, quantity: cartItem.quantity - 1 }
+      : cartItem
+  );
+}
+
+const clearCartItem = (cartItems, cartItemToClear) => {
+  return cartItems.filter((cartItem) => cartItem.id !== cartItemToClear.id);
 }
 
 
 export const CartContext = createContext({
-    isCartOpen: false,
-    setIsCartOpen: () => {},
-    cartItems: [],
-    addItemToCart: () => {},
-    removeItemFromCart: () => {},
-    cartCount : 0,
+  isCartOpen: false,
+  setIsCartOpen: () => {},
+  cartItems: [],
+  addItemToCart: () => {},
+  removeItemFromCart: () => {},
+  clearItemFromCart: () => {},
+  cartCount : 0,
 });
 
 /*  
@@ -107,11 +112,20 @@ export const CartProvider = ({children}) => {
   };
   // console.log(removeItemToCart);
 
+  /*  Reset article 
+      cartItemToClear => l'article q'on souhaite reset
+  */
+  const clearItemFromCart = (cartItemToClear) => {
+    setCartItems(clearCartItem(cartItems, cartItemToClear));
+  };
+  // console.log(removeItemToCart);
+
   const value = {
     isCartOpen,
     setIsCartOpen,
     addItemToCart,
     removeItemToCart,
+    clearItemFromCart,
     cartItems,
     cartCount,
   };

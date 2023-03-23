@@ -7,7 +7,7 @@ import Button from '../button/button.component';
 import './product-card.styles.scss';
 
 const ProductCard = ({ product }) => {
-  console.log('Product', product);
+  // console.log('Product', product);
   const { name, price, imageUrl } = product;
 
   const { addItemToCart } = useContext(CartContext);
